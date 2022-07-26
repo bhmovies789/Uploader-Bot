@@ -170,10 +170,7 @@ async def youtube_dl_call_back(bot, update):
             os.remove(save_ytdl_json_path)
         except FileNotFoundError as exc:
             pass
-    Config.IS_RETRT = False
-    if Config.PRM_USERS:
-        if str(from_user) not in str(Config.PRM_USERS):
-            Config.IS_RETRT = True        
+        
         end_one = datetime.now()
         time_taken_for_download = (end_one -start).seconds
         file_size = Config.TG_MAX_FILE_SIZE + 1
@@ -183,8 +180,8 @@ async def youtube_dl_call_back(bot, update):
             download_directory = os.path.splitext(download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
-        if file_size > Config.TG_MAX_FILE_SIZE and file_size < Config.TG_PRM_FILE_SIZE and isUserPremium and (not Config.IS_RETRT):
-            logger.info(f"User Type : Premium ({from_user})")
+        if file_size > Config.TG_MAX_FILE_SIZE and file_size < Config.TG_PRM_FILE_SIZE:
+            
         
             await update.message.edit_caption(
                 
