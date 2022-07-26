@@ -180,7 +180,9 @@ async def youtube_dl_call_back(bot, update):
             download_directory = os.path.splitext(download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
-        if ((file_size > Config.TG_MAX_FILE_SIZE)):
+        if file_size > Config.TG_MAX_FILE_SIZE and file_size < Config.TG_PRM_FILE_SIZE and isUserPremium and (not Config.IS_RETRT):
+            LOGGER.info(f"User Type : Premium ({from_user})")
+        
             await update.message.edit_caption(
                 
                 caption=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size))
